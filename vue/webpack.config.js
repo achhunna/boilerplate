@@ -1,21 +1,21 @@
-var path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: "./src/main.js",
+  entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/dist"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/dist'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: {
-          loader: "babel-loader",
-          options: { presets: ["es2015"] }
+          loader: 'babel-loader',
+          options: { presets: ['es2015'] }
         }
       },
       {
@@ -25,10 +25,10 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: 'css-loader' // translates CSS into CommonJS
           },
           {
-            loader: "sass-loader" // compiles Sass to CSS
+            loader: 'sass-loader' // compiles Sass to CSS
           }
         ]
       }
@@ -55,8 +55,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ]
 };
