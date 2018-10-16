@@ -3,10 +3,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/main.js',
+  entry: {
+    vue: 'vue',
+    index: './src/main.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/dist'
   },
   module: {
@@ -17,6 +20,23 @@ module.exports = {
           loader: 'babel-loader',
           options: { presets: ['es2015'] }
         }
+      },
+      {
+        // vue-loader config to load `.vue` files or single file components.
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+            loaders: {
+                // https://vue-loader.vuejs.org/guide/scoped-css.html#mixing-local-and-global-styles
+                css: ['vue-style-loader', {
+                    loader: 'css-loader',
+                }],
+                js: [
+                    'babel-loader',
+                ],
+            },
+            cacheBusting: true,
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/,
