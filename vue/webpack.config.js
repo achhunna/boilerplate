@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: 'development',
@@ -9,18 +11,11 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: 'bundle.js',
     publicPath: '/dist'
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: { presets: ['es2015'] }
-        }
-      },
       {
         // vue-loader config to load `.vue` files or single file components.
         test: /\.vue$/,
@@ -39,21 +34,23 @@ module.exports = {
         },
       },
       {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: { presets: ['es2015'] }
+        }
+      },
+      {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader' // translates CSS into CommonJS
-          },
-          {
-            loader: 'sass-loader' // compiles Sass to CSS
-          }
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
         ]
       }
     ]
   },
+  devtool: 'source-map',
   devServer: {
     // The url you want the webpack-dev-server to use for serving files.
     host: '0.0.0.0',
@@ -72,11 +69,24 @@ module.exports = {
     watchContentBase: true,
   },
   plugins: [
+    new webpack.NamedModulesPlugin(),
+    // Exchanges, adds, or removes modules while an application is running, without a full reload.
+    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: '[name].css',
       chunkFilename: '[id].css'
     })
-  ]
+  ],
+  resolve: {
+      /**
+       * The compiler-included build of vue which allows to use vue templates
+       * without pre-compiling them
+       */
+      alias: {
+          'vue$': 'vue/dist/vue.esm.js',
+      },
+      extensions: ['*', '.vue', '.js', '.json'],
+  },
 };

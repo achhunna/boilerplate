@@ -5,12 +5,15 @@
 <script>
 export default {
     name: 'app'
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .container {
-    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 </style>
 
