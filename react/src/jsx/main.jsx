@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { reducer } from './reducers';
 import App from './app';
 import thunk from 'redux-thunk';
+import '../styles/main.scss';
 
 const init = {
   data: {
