@@ -16,10 +16,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: { presets: ['es2015'] }
+          loader: 'babel-loader'
         }
       },
       {
@@ -60,8 +60,5 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-    'transform-object-rest-spread',
-    'transform-class-properties',
-    'transform-decorators-legacy'
   ]
 };
