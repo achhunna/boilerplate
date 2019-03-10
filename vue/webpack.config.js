@@ -64,7 +64,6 @@ module.exports = {
         ignored: /node_modules/,
         poll: true,
     },
-    contentBase: 'src/',
     // Reload for code changes to static assets.
     watchContentBase: true,
   },
