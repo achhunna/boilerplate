@@ -49,6 +49,7 @@ module.exports = {
     contentBase: 'src/',
     // Reload for code changes to static assets.
     watchContentBase: true,
+    historyApiFallback: true,
   },
   plugins: [
     new webpack.NamedModulesPlugin(),

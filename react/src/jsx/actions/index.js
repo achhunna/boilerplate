@@ -1,12 +1,5 @@
 import axios from 'axios';
 
-export const updateName = (name) => {
-  return {
-    type: "UPDATE_NAME",
-    payload: { name }
-  };
-};
-
 const updateStock = (stock) => {
   return {
     type: "UPDATE_STOCK",
