@@ -4,16 +4,16 @@ import axios from 'axios';
 import * as actions from '../actions';
 
 const mapStateToProps = (state) => {
-  return {}
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getData: (url, ticker) => dispatch(actions.getData(url, ticker))
+    getData: (url) => dispatch(actions.getData(url)),
   }
 }
 
-const APIURL = 'https://api.iextrading.com/1.0/stock/market/batch?types=quote'
+const API_URL = 'https://financialmodelingprep.com/api/v3/stock/real-time-price/';
 
 class Stock extends React.Component {
 
@@ -27,7 +27,7 @@ class Stock extends React.Component {
   }
 
   getData() {
-    this.props.getData(APIURL + `&symbols=${this.state.ticker}`, this.state.ticker);
+    this.props.getData(API_URL + `${this.state.ticker}`);
   }
 
   handleChange(e) {

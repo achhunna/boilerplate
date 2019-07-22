@@ -2,29 +2,33 @@ import axios from 'axios';
 
 const updateStock = (stock) => {
   return {
-    type: "UPDATE_STOCK",
-    payload: stock
+    type: 'UPDATE_STOCK',
+    payload: stock,
   };
-};
-
-function getPromise(url) {
-  return axios.get(url);
 }
 
-export const getData = (url, ticker) => (dispatch) => {
-  const promise = getPromise(url);
-  const promise2 = getPromise(url);
-  Promise.all([promise, promise2])
+const throwError = (err) => {
+  return {
+    type: 'THROW_ERROR',
+    payload: err.Error,
+  };
+}
+
+export const getData = (url) => (dispatch) => {
+  axios.get(url)
     .then(data => {
-      const parsedData = Array.isArray(data) ? data[0] : data;
-      const quote = parsedData.data[ticker.toUpperCase()].quote;
-      const stock = {
-        ticker,
-        name: quote.companyName,
-        price: quote.iexRealtimePrice ? quote.iexRealtimePrice : quote.close,
-        marketCap: quote.marketCap
-      };
-      dispatch(updateStock(stock));
+      if (!data.data.Error) {
+        const stock = {
+          name: data.data.symbol,
+          price: data.data.price,
+        };
+        dispatch(updateStock(stock));
+      } else {
+        dispatch(throwError(data.data));
+      }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      dispatch(throwError(err));
+      console.log(err);
+    });
 };
